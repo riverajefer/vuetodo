@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VueJs Todo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .hecho{
+            text-decoration: line-through;
+        }
+        .mover{
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <h4>Todo</h4>
+    <div id="app" align="center">
+
+    <form v-on:submit.prevent="addTask()">
+      <div class="row">
+        <div class="col s12">
+          <div class="input-field inline">
+            <input id="task" type="text" class="validate" v-model="tasks.name" required>
+            <label for="task" data-error="wrong" data-success="right">Add Task</label>
+          </div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Add
+            </button>
+        </div>
+      </div>            
+     </form>
+
+        <draggable v-model="tasks" class="collection z-depth-2" style="width:40%" :element="'ul'">
+        <li class="collection-item" v-for="task in tasks">
+            <div>
+                <input type="checkbox" name="estado" v-bind:id="task.id" v-model="task.done">
+                <label v-bind:for="task.id" style="float:left; min-width:20%">
+                    <span v-if="task.done">Hecho</span>
+                    <span v-else>Por hacer</span>
+                </label>            
+
+                <span :class="{hecho:task.done}" class="mover">
+                   <b>{{task.name}}</b> 
+                </span>
+
+                <a class="secondary-content" :disabled="!task.done" v-on:click="eliminar(task)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                </a>            
+            </div>
+        </li>
+        </draggable>
+
+    </div>
+    <!-- End app-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdn.jsdelivr.net/sortable/1.4.2/Sortable.min.js"></script>
+    <script src="https://cdn.rawgit.com/David-Desmaisons/Vue.Draggable/master/dist/vuedraggable.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
