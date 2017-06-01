@@ -34,7 +34,7 @@
       </div>            
      </form>
 
-        <draggable v-model="tasks" class="collection z-depth-2" style="width:40%" :element="'ul'">
+        <draggable v-model="tasks" class="collection z-depth-2" style="width:90%" :element="'ul'">
         <li class="collection-item" v-for="task in tasks">
             <div>
                 <input type="checkbox" name="estado" v-bind:id="task.id" v-model="task.done">
