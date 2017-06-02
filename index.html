@@ -17,46 +17,55 @@
     </style>
 </head>
 <body>
-    <h4>Todo</h4>
     <div id="app" align="center">
-
+    <h4>Lista de tareas</h4>
     <form v-on:submit.prevent="addTask()">
       <div class="row">
         <div class="col s12">
           <div class="input-field inline">
-            <input id="task" type="text" class="validate" v-model="tasks.name" required>
+            <input id="task" type="text" class="validate" v-model="tasks.task" required>
             <label for="task" data-error="wrong" data-success="right">Add Task</label>
           </div>
-            <button class="btn waves-effect waves-light" type="submit" name="action">
-                Add
-            </button>
+            <button class="btn waves-effect waves-light" type="submit" name="action"> Add </button>
         </div>
       </div>            
      </form>
 
-        <draggable v-model="tasks" class="collection z-depth-2" style="width:90%" :element="'ul'">
+    <draggable v-model="tasks" class="collection z-depth-2" :list="tasks" style="width:90%" :element="'ul'" :move="checkMove">
         <li class="collection-item" v-for="task in tasks">
             <div>
-                <input type="checkbox" name="estado" v-bind:id="task.id" v-model="task.done">
+                <input type="checkbox" name="estado" v-bind:id="task.id" v-model="task.done" v-on:click="done(task)">
                 <label v-bind:for="task.id" style="float:left; min-width:20%">
                     <span v-if="task.done">Hecho</span>
                     <span v-else>Por hacer</span>
                 </label>            
-
-                <span :class="{hecho:task.done}" class="mover">
-                   <b>{{task.name}}</b> 
+                <span :class="{hecho:task.done}" class="mover" v-on:dblclick="editar(task)">
+                    {{task.task}}
                 </span>
-
                 <a class="secondary-content" :disabled="!task.done" v-on:click="eliminar(task)">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                 </a>            
             </div>
         </li>
-        </draggable>
+    </draggable>
+
+  <a class="waves-effect waves-light btn" href="#modal1">Modal</a>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+        <h4>Titulo:  {{titulo}}</h4>
+        <input id="task" type="text" class="validate" v-model="titulo" required>
+        </div>
+        <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        </div>
+    </div>
+
 
     </div>
     <!-- End app-->
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script src="https://unpkg.com/vue"></script>
